@@ -1,0 +1,9 @@
+.btnAccept{
+    background-color: #00C505 !important;
+    transform: skew(-20deg);
+}
+
+.btnCancel{
+    background-color: #F72403  !important;
+    transform: skew(-20deg);
+}

@@ -1,0 +1,24 @@
+.centerText{
+    text-align: center;
+}
+
+.boxLogin{
+    margin-top: 10%;
+    height: 410px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.imgLogin{
+    height: 100px;
+    width: 125px;
+}
+
+.h-center{
+    display: flex;
+    justify-content: center;
+}
+
+.btnConfirm{
+    background-color: yellowgreen !important;
+}
