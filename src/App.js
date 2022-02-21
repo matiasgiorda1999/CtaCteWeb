@@ -6,11 +6,13 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const PORT = require('./config');
+
 function App() {
   const [renderComponent,setRenderComponent] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/usuarios?email=${parseJwt(sessionStorage.getItem('token'))?.user.email}&contrasena=${parseJwt(sessionStorage.getItem('token'))?.user.contrasena}`)
+    axios.get(`${PORT()}/usuarios?email=${parseJwt(sessionStorage.getItem('token'))?.user.email}&contrasena=${parseJwt(sessionStorage.getItem('token'))?.user.contrasena}`)
     .then((res) => {
       if(res.data.msj === 'Correcto'){
         setRenderComponent('Menu')

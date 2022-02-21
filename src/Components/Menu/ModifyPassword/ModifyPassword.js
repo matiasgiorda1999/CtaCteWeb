@@ -8,6 +8,7 @@ import '../../../Common/Styles.css';
 import { useRef, useState } from 'react';
 import axios from 'axios';
 
+const PORT = require('../../../config');
 
 const ModifyPassword = ({setFunctionality}) => {
 
@@ -59,14 +60,14 @@ const ModifyPassword = ({setFunctionality}) => {
     const updatePassword = () => {
         if(!errEqualsPass && !errLengthPass && !errEspCharPass && !errNumPass) {
             let newPass = newPassword.current.value;
-            axios.put('http://localhost:3001/usuarios',{ password: newPass },
+            axios.put(`${PORT()}/usuarios`,{ password: newPass },
                         { headers: {Authorization : `Bearer ${sessionStorage.getItem('token')}`.replaceAll('"','')} })
             .then((res) => {
                 if(res.data.msj === 'Registro usuario modificado exitosamente'){
                     successMessage('Correcto',res.data.msj);
                     resetInputs();
-                    setFunctionality('EnterprisesList');
-                    axios.post(`http://localhost:3001/login`,{ email: parseJwt(sessionStorage.getItem('token')).user.email , password: newPass })
+                    setFunctionality('CtaCteQuery');
+                    axios.post(`${PORT()}/login`,{ email: parseJwt(sessionStorage.getItem('token')).user.email , password: newPass })
                     .then((res) => {
                         sessionStorage.setItem('token',JSON.stringify(res.data.token));
                     })

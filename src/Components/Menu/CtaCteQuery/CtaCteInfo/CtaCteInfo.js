@@ -2,28 +2,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackspace } from '@fortawesome/free-solid-svg-icons';
 import parseJwt from '../../../../Common/parseJwt';
 import React from 'react';
-import { toDateSpanish, toCUITformat, toCompNumber, toDomicile } from '../../../../Common/Pipes/pipes';
+import { toDateSpanish, toCompNumber, toDomicile } from '../../../../Common/Pipes/pipes';
+import './CtaCteInfo.css';
 
 const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initDate, finishDate}) => {
-    
+
     const onClickBackButton = () =>{
         setRenderComponent('Filter');
     }
     let debe = 0, haber = 0, saldo = ctacteInfo[0].SaldoIni;
 
     return(
-    <div style={{flexDirection: 'column', flex:1, display:'flex'}}>
-        <div style={{flex: 1}}>
+    <div className='container-fluid'>
+        <div>
             <button className='col-md-1 btn' onClick={onClickBackButton}>
                 <FontAwesomeIcon icon={faBackspace}/> <label style={{cursor: 'pointer'}}>Volver</label>
             </button>
         </div>
-        <div style={{flex: 2, margin: '1%'}}>
+        <div className='col-md-4 offset-md-4'>
             <h1 style={{textAlign: 'center'}}>{enterprise.nombre}</h1>
         </div>
-        <div style={{flexDirection: 'row', flex: 3 ,display: 'flex', margin: '1%'}}>
+        <div style={{flexDirection: 'row',display: 'flex', marginTop: '2%'}}>
             <div style={{flex: 1}}>
-                <img src={`${enterprise.imagenURL}`} alt='' style={{width: '70%', height: '90%', borderRadius: '50%'}}/>
+                <img src={`${enterprise.imagenURL}`} alt='' style={{width: '70%', minWidth: '60px' , height: '90%', borderRadius: '50%'}}/>
             </div>
             <div style={{flexDirection: 'column', flex:15, display:'flex'}}>
                 <div style={{flex: 1}}>
@@ -34,7 +35,7 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                         <label><b>{enterprise.Responsable}</b></label>
                     </div>
                     <div style={{flex:1}}>
-                        <label><b>C.U.I.T. {toCUITformat(enterprise.CUIT)}</b></label>
+                        <label><b>C.U.I.T. {enterprise.CUIT}</b></label>
                     </div>
                     <div style={{flex:2}}>
                         <label><b>Ingresos Brutos {enterprise.IngBrutoCondicion}</b></label>
@@ -42,7 +43,7 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                 </div>
             </div>
         </div>
-        <div style={{flex: 10, margin: '1%'}}>
+        <div>
             <table style={{width: '100%', height: '100%'}}>
                 <tbody>
                     <tr>
@@ -93,7 +94,7 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                                 </div>
                                 <div style={{flexDirection:'row', flex: 1, display:'flex'}}>
                                     <div style={{flex: 1}}>
-                                        <label><b>C.U.I.T {toCUITformat(parseJwt(sessionStorage.getItem('token')).user.CUIT)}</b></label>
+                                        <label><b>C.U.I.T {parseJwt(sessionStorage.getItem('token')).user.CUIT}</b></label>
                                     </div>
                                     <div style={{flex: 1}}>
                                         <label><b>{ctacteInfo[0].Responsable}</b></label>
@@ -104,6 +105,8 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div>
             <table style={{width: '100%', height: '100%'}}>
                 <tbody>
                     <tr>
@@ -113,7 +116,9 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                     </tr>
                 </tbody>
             </table>
-            <table style={{width: '100%', height: '100%'}}>
+        </div>
+        <div>
+            <table style={window.screen.width<400?{ display: 'block', overflow: 'auto', width: '100%', height: '100%' }:{ width: '100%', height: '100%' }}>
                 <thead>
                     <tr style={{borderStyle: 'solid', borderWidth: '1px', borderColor: 'black'}}>
                         <th style={{textAlign: 'center'}}>
@@ -144,7 +149,7 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td><td></td><td></td><td></td><td style={{textAlign:'center'}}><label>Saldo Anterior</label></td><td style={{textAlign: 'center'}}>{ctacteInfo[0].SaldoIni?ctacteInfo[0].SaldoIni:0}</td><td></td>
+                        <td></td><td></td><td></td><td></td><td style={{textAlign:'center'}}><label>Saldo Anterior</label></td><td style={{textAlign: 'center'}}><label>{ctacteInfo[0].SaldoIni?ctacteInfo[0].SaldoIni:0}</label></td><td></td>
                     </tr>
                     {ctacteInfo.map((cci,i) => {
                         debe = debe + cci.Debe;
@@ -152,21 +157,21 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                         saldo = saldo + cci.Haber - cci.Debe;
                         return(
                             <tr key={i} style={(i===ctacteInfo.length -1)?{borderStyle: 'solid', borderWidth: '0px 0px 0.5px 0px', borderColor: 'black'}:{}}>
-                                <td style={{textAlign: 'center'}}>{toDateSpanish(cci.Fecha)}</td>
-                                <td style={{textAlign: 'center'}}>{cci.Detalle.toUpperCase()}</td>
-                                <td style={{textAlign: 'center'}}>{toCompNumber(cci.Letra,cci.Numero)}</td>
-                                <td style={{textAlign: 'center'}}>{cci.Debe?cci.Debe:0}</td>
-                                <td style={{textAlign: 'center'}}>{cci.Haber?cci.Haber:0}</td>
-                                <td style={{textAlign: 'center'}}>{saldo}</td>
-                                <td style={{textAlign: 'center'}}>-</td>
+                                <td style={{textAlign: 'center'}}><label>{toDateSpanish(cci.Fecha)}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{cci.Detalle.toUpperCase()}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{toCompNumber(cci.Letra,cci.Numero)}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{cci.Debe?cci.Debe:0}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{cci.Haber?cci.Haber:0}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{saldo}</label></td>
+                                <td style={{textAlign: 'center'}}><label>-</label></td>
                                 <td style={{textAlign: 'center'}}><input type='checkbox' checked={cci.Cancelado === 1}></input></td>
                             </tr>
                         )
                     })}
                     <tr>
                         <td></td><td></td><td></td>
-                        <td style={{textAlign: 'center'}}>{debe}</td>
-                        <td style={{textAlign: 'center'}}>{haber}</td>
+                        <td style={{textAlign: 'center'}}><label>{debe}</label></td>
+                        <td style={{textAlign: 'center'}}><label>{haber}</label></td>
                     </tr>
                     <tr>
                         <td></td><td></td>

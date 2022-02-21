@@ -3,7 +3,9 @@ import imgBBv from '../../../Images/BbvLogo.jpg';
 import axios from "axios";
 import errorMessage from "../../../Common/errorMessage";
 import successMessage from "../../../Common/successMessage";
+import { toCUITformat } from "../../../Common/Pipes/pipes";
 
+const PORT = require('../../../config');
 
 const RegisterUser = ({setAction}) => {
     const dniInput = useRef();
@@ -12,13 +14,13 @@ const RegisterUser = ({setAction}) => {
 
     const registerUser = () => {
         let dni = dniInput.current.value;
-        let cuit = cuitInput.current.value;
+        let cuit = toCUITformat(cuitInput.current.value);
         let email = emailInput.current.value;
-        if(dni === '' || cuit === '' || email === ''){
-            errorMessage('Error','Todos los campos son obligatorios...');
+        if((dni === '' && cuit === '') || email === ''){
+            errorMessage('Error','Debe indicar su número de DNI o CUIT y un email...');
             resetInputs();
         }else{
-            axios.post('http://localhost:3001/sendEmail/newUser',{dni: dni, cuit: cuit, email: email})
+            axios.post(`${PORT()}/sendEmail/newUser`,{dni: dni, cuit: cuit, email: email})
             .then((res) => {
                 if(res.data.msj === "Email enviado con éxito"){
                     successMessage("Correcto",`Se ha registrado correctamente su usuario. Se le envio a su email una contraseña de 6 dígitos la cual puede cambiar para una mayor seguridad`);

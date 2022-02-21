@@ -5,6 +5,8 @@ import axios from 'axios';
 import errorMessage from '../../../../Common/errorMessage';
 import swal from 'sweetalert';
 
+const PORT = require('../../../../config');
+
 const Filter = ({enterprise, setRenderComponent, setHideNavbar, setEnterprise, setCtaCteInfo, idClient, setInitDate, setFinishDate}) => {
     
     const inputInitDate = useRef();
@@ -37,7 +39,7 @@ const Filter = ({enterprise, setRenderComponent, setHideNavbar, setEnterprise, s
     const consult = () => {
         let fechaDesde = inputInitDate.current.value.replaceAll('-','');
         let fechaHasta = inputFinishDate.current.value.replaceAll('-','');
-        axios.get(`http://localhost:3001/ctacte?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&idCliente=${idClient}`)
+        axios.get(`${PORT()}/ctacte?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&idCliente=${idClient}&idEmpresa=${enterprise.idempresa}`)
         .then((res) => {
             if(res.data.length === 0){
                 swal('Advertencia','No existen movimientos en el periodo seleccionado','warning');
@@ -67,18 +69,25 @@ const Filter = ({enterprise, setRenderComponent, setHideNavbar, setEnterprise, s
                 <h5>Consultar movimientos</h5>
             </div>
             <br/>
-            <div style={{flexDirection: 'row', display: 'flex', alignItems: 'center'}}>
-                <label className='col-md-1 offset-md-2'>Fecha desde</label>
+            <br/>
+            <div className='formRow' >
+                <label className='col-md-2 offset-md-4' >Fecha desde</label>
                 <input type='date' style={{width: '150px'}} ref={inputInitDate} onChange={() => {onChangeDate(true)}}></input>
-                <label className='col-md-1 offset-md-3'>Fecha hasta</label>
+            </div>
+            <br/>
+            <br/>
+            <div className='formRow'>
+                <label className='col-md-2 offset-md-4'>Fecha hasta</label>
                 <input type='date' style={{width: '150px'}} ref={inputFinishDate} onChange={() => {onChangeDate(false)}}></input>
             </div>
             <br/><br/><br/><br/>
             <div>
-                <button className="btn btnCancel col-md-2 offset-md-5" 
+                <button className="btn btnCancel col-md-2 offset-md-5"
+                        style={window.screen.width<400?{marginLeft: '15%'}:{}} 
                         onClick={onClickBack}><FontAwesomeIcon icon={faTimesCircle}/>Cancelar
                 </button>
                 <button className="btn btnAccept col-md-2 offset-md-1"
+                        style={window.screen.width<400?{marginLeft: '15%'}:{}}
                         onClick={consult}><FontAwesomeIcon icon={faCheckCircle}/>Consultar
                 </button>
             </div>

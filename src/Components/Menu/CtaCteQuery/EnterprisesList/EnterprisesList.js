@@ -3,12 +3,14 @@ import EnterpriseButton from './EnterpriseButton/EnterpriseButton';
 import parseJwt from '../../../../Common/parseJwt';
 import axios from 'axios';
 
+const PORT  = require('../../../../config');
+
 const EnterprisesList = ({setRenderComponent, setHideNavbar, setEnterpriseSelected, setIdClient}) => {
 
     const [enterprisesGroup,setEnterprisesGroup] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/empresas/${parseJwt(sessionStorage.getItem('token')).user.id}`)
+        axios.get(`${PORT()}/empresas/${parseJwt(sessionStorage.getItem('token')).user.id}`)
         .then((res) => {
             let aux = [];
             res.data.forEach((enterprise,i) => {

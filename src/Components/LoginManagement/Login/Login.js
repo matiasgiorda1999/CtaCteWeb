@@ -7,6 +7,8 @@ import '../../LoginManagement/LoginManagement.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
+const PORT = require('../../../config');
+
 const Login = ({setAction, setRenderComponent}) => {
 
     const [showPsw,setShowPsw] = useState(false);
@@ -19,7 +21,7 @@ const Login = ({setAction, setRenderComponent}) => {
             errorMessage("Opps...","E-mail y/o constraseña incorrectos ...");
         }
         else{
-            axios.post(`http://localhost:3001/login`,{ email: emailInput.current.value, password: passwordInput.current.value })
+            axios.post(`${PORT()}/login`,{ email: emailInput.current.value, password: passwordInput.current.value })
             .then((res) => {
                 if(res.data.token !== undefined){
                     successMessage("Correcto",`Bienvenido ${emailInput.current.value}`);

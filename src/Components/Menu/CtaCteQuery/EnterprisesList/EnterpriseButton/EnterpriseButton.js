@@ -2,10 +2,12 @@ import axios from "axios";
 import React from "react";
 import './EnterpriseButton.css';
 
+const PORT = require('../../../../../config');
+
 const EnterpriseButton = ({enterprise, setRenderComponent, setHideNavbar, setEnterpriseSelected, setIdClient}) => {
 
     const onClickEnterpriseButton = () => {
-        axios.get(`http://localhost:3001/usuarios/getIdClient?idEmpresa=${enterprise.idempresa}`, 
+        axios.get(`${PORT()}/usuarios/getIdClient?idEmpresa=${enterprise.idempresa}`, 
         { headers: {Authorization : `Bearer ${sessionStorage.getItem('token')}`.replaceAll('"','')} })
         .then((res) => {
             setIdClient(res.data.ClienteId);

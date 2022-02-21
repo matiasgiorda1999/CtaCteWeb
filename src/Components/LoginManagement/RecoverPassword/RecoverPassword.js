@@ -4,6 +4,8 @@ import imgBBv from '../../../Images/BbvLogo.jpg';
 import successMessage from '../../../Common/successMessage';
 import errorMessage from '../../../Common/errorMessage';
 
+const PORT = require('../../../config');
+
 const RecoverPassword = ({setAction}) => {
 
     const emailInput = useRef();
@@ -14,7 +16,7 @@ const RecoverPassword = ({setAction}) => {
             errorMessage('Error','Todos los campos son obligatorios...');
             resetInputs();
         }else{
-            axios.post(`http://localhost:3001/sendEmail/updatePassword`,{email: email})
+            axios.post(`${PORT()}/sendEmail/updatePassword`,{email: email})
             .then((res) => {
                 if(res.data.msj === 'Email enviado con éxito'){
                     successMessage("Correcto",`Se ha enviado a su casilla de correo la nueva contraseña.`);
