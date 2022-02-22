@@ -164,7 +164,7 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                                 <td style={{textAlign: 'center'}}><label>{cci.Haber?toAmount(cci.Haber):0}</label></td>
                                 <td style={{textAlign: 'center'}}><label>{toAmount(saldo)}</label></td>
                                 <td style={{textAlign: 'center'}}><label>-</label></td>
-                                <td style={{textAlign: 'center'}}><input type='checkbox' checked={cci.Cancelado === 1}></input></td>
+                                <td style={{textAlign: 'center'}}><input type='checkbox' readOnly checked={cci.Cancelado === 1}></input></td>
                             </tr>
                         )
                     })}
