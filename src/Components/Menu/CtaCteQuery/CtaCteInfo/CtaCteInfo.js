@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackspace } from '@fortawesome/free-solid-svg-icons';
 import parseJwt from '../../../../Common/parseJwt';
 import React from 'react';
-import { toDateSpanish, toCompNumber, toDomicile } from '../../../../Common/Pipes/pipes';
+import { toDateSpanish, toAmount, toCompNumber, toDomicile } from '../../../../Common/Pipes/pipes';
 import './CtaCteInfo.css';
 
 const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initDate, finishDate}) => {
@@ -149,7 +149,7 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td><td></td><td></td><td></td><td style={{textAlign:'center'}}><label>Saldo Anterior</label></td><td style={{textAlign: 'center'}}><label>{ctacteInfo[0].SaldoIni?ctacteInfo[0].SaldoIni:0}</label></td><td></td>
+                        <td></td><td></td><td></td><td></td><td style={{textAlign:'center'}}><label>Saldo Anterior</label></td><td style={{textAlign: 'center'}}><label>{ctacteInfo[0].SaldoIni?toAmount(ctacteInfo[0].SaldoIni):0}</label></td><td></td>
                     </tr>
                     {ctacteInfo.map((cci,i) => {
                         debe = debe + cci.Debe;
@@ -160,9 +160,9 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                                 <td style={{textAlign: 'center'}}><label>{toDateSpanish(cci.Fecha)}</label></td>
                                 <td style={{textAlign: 'center'}}><label>{cci.Detalle.toUpperCase()}</label></td>
                                 <td style={{textAlign: 'center'}}><label>{toCompNumber(cci.Letra,cci.Numero)}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{cci.Debe?cci.Debe:0}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{cci.Haber?cci.Haber:0}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{saldo}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{cci.Debe?toAmount(cci.Debe):0}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{cci.Haber?toAmount(cci.Haber):0}</label></td>
+                                <td style={{textAlign: 'center'}}><label>{toAmount(saldo)}</label></td>
                                 <td style={{textAlign: 'center'}}><label>-</label></td>
                                 <td style={{textAlign: 'center'}}><input type='checkbox' checked={cci.Cancelado === 1}></input></td>
                             </tr>
@@ -170,14 +170,14 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                     })}
                     <tr>
                         <td></td><td></td><td></td>
-                        <td style={{textAlign: 'center'}}><label>{debe}</label></td>
-                        <td style={{textAlign: 'center'}}><label>{haber}</label></td>
+                        <td style={{textAlign: 'center'}}><label>{toAmount(debe)}</label></td>
+                        <td style={{textAlign: 'center'}}><label>{toAmount(haber)}</label></td>
                     </tr>
                     <tr>
                         <td></td><td></td>
                         <td style={{textAlign: 'end'}}><label><b>Saldo actual</b></label></td>
                         <td></td><td></td>
-                        <td style={{textAlign: 'start'}}><label><b>{saldo}</b></label></td>
+                        <td style={{textAlign: 'start'}}><label><b>{toAmount(saldo)}</b></label></td>
                     </tr>
                 </tbody>
             </table>

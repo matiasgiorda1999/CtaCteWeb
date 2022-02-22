@@ -11,7 +11,7 @@ export const toCUITformat = (cuit) => {
 }
 
 export const toCompNumber = (letter,compNum) =>{
-    let newComp = `${letter} 0001-00000000`;
+    let newComp = letter ? `${letter} 0001-00000000` : '0001-00000000';
     compNum = compNum.toString();
     newComp = newComp.slice(0,newComp.length - compNum.length) + compNum;
     return newComp
@@ -20,4 +20,20 @@ export const toCompNumber = (letter,compNum) =>{
 export const toDomicile = (location, province, country) => {
     let domicile = `${location?location:''}${province?location?', ' + province:province:''}${country?province?' - ' + country:country:''}`;
     return(domicile)
+}
+
+export const toAmount = (amount) => {
+    let newAmount = amount.toString().replace(".",",");
+    let index = newAmount.indexOf(",");
+    if(index === -1){
+        index = newAmount.length;
+    }else{
+        newAmount = newAmount.slice(0,index + 3);
+    }
+    let pointers = parseInt(index / 3);
+    if(index % 3 === 0) pointers --
+    for(let i = 1 ; i <= pointers ; i++){
+        newAmount = newAmount.slice(0,(index - i*3)) + "." + newAmount.slice((index - i*3));
+    }
+    return newAmount;
 }

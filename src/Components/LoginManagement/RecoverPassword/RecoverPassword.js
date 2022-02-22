@@ -3,6 +3,7 @@ import React , { useRef }from 'react'
 import imgBBv from '../../../Images/BbvLogo.jpg';
 import successMessage from '../../../Common/successMessage';
 import errorMessage from '../../../Common/errorMessage';
+import loadingMessage from '../../../Common/loadingMessage';
 
 const PORT = require('../../../config');
 
@@ -16,6 +17,7 @@ const RecoverPassword = ({setAction}) => {
             errorMessage('Error','Todos los campos son obligatorios...');
             resetInputs();
         }else{
+            loadingMessage('Procesando peticion...');
             axios.post(`${PORT()}/sendEmail/updatePassword`,{email: email})
             .then((res) => {
                 if(res.data.msj === 'Email enviado con éxito'){
@@ -50,7 +52,7 @@ const RecoverPassword = ({setAction}) => {
         </div>
         <br /><br />
         <button className="btn"  style={{marginTop: '2%'}} onClick={() => {setAction('Login')}}><span style={{fontSize: '10px'}}>volver atras</span></button>
-        <button type="button" className="btn btnConfirm col-12" onClick={recoverPassword}><label>Enviar Email!</label></button>
+        <button type="button" className="btn btnConfirm col-12" onClick={recoverPassword}><label style={{cursor: 'pointer'}}>Enviar Email!</label></button>
     </>)
 }
 

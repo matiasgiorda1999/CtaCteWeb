@@ -6,6 +6,7 @@ import axios from 'axios';
 import '../../LoginManagement/LoginManagement.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import loadingMessage from '../../../Common/loadingMessage';
 
 const PORT = require('../../../config');
 
@@ -21,6 +22,7 @@ const Login = ({setAction, setRenderComponent}) => {
             errorMessage("Opps...","E-mail y/o constraseña incorrectos ...");
         }
         else{
+            loadingMessage('Iniciando sesion...');
             axios.post(`${PORT()}/login`,{ email: emailInput.current.value, password: passwordInput.current.value })
             .then((res) => {
                 if(res.data.token !== undefined){
@@ -61,7 +63,7 @@ const Login = ({setAction, setRenderComponent}) => {
                     <span style={{fontSize: '10px'}}>{showPsw?"Ocultar":"Ver"} contraseña</span>
                 </button>
             </div>
-            <button type="button" className="btn btnConfirm col-12" onClick={validateSession}><label>Iniciar Sesión</label></button>
+            <button type="button" className="btn btnConfirm col-12" onClick={validateSession}><label style={{cursor: 'pointer'}}>Iniciar Sesión</label></button>
             <br/>
             <div className='form-row'>
                 <button className='btn col-6' onClick={() => {setAction('Register')}}>

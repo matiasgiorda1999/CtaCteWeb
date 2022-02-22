@@ -3,6 +3,7 @@ import imgBBv from '../../../Images/BbvLogo.jpg';
 import axios from "axios";
 import errorMessage from "../../../Common/errorMessage";
 import successMessage from "../../../Common/successMessage";
+import loadingMessage from "../../../Common/loadingMessage";
 import { toCUITformat } from "../../../Common/Pipes/pipes";
 
 const PORT = require('../../../config');
@@ -20,6 +21,7 @@ const RegisterUser = ({setAction}) => {
             errorMessage('Error','Debe indicar su número de DNI o CUIT y un email...');
             resetInputs();
         }else{
+            loadingMessage('Registrando usuario...');
             axios.post(`${PORT()}/sendEmail/newUser`,{dni: dni, cuit: cuit, email: email})
             .then((res) => {
                 if(res.data.msj === "Email enviado con éxito"){
@@ -59,7 +61,7 @@ const RegisterUser = ({setAction}) => {
         </div>
         <input type="email" style={{textAlign: 'center'}} className="form-control" id="emailInput" placeholder="ejemplo@email.com" ref={emailInput}/>
         <button className="btn"  style={{marginTop: '2%'}} onClick={() => {setAction('Login')}}><span style={{fontSize: '10px'}}>volver atras</span></button>
-        <button type="button" className="btn btnConfirm col-12" onClick={registerUser}><label>Registrarme</label></button>
+        <button type="button" className="btn btnConfirm col-12" onClick={registerUser}><label style={{cursor: 'pointer'}}>Registrarme</label></button>
     </>)
 }
 

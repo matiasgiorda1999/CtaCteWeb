@@ -4,6 +4,7 @@ import { faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import errorMessage from '../../../../Common/errorMessage';
 import swal from 'sweetalert';
+import loadingMessage from '../../../../Common/loadingMessage';
 
 const PORT = require('../../../../config');
 
@@ -37,6 +38,7 @@ const Filter = ({enterprise, setRenderComponent, setHideNavbar, setEnterprise, s
     }
 
     const consult = () => {
+        loadingMessage('Buscando información...')
         let fechaDesde = inputInitDate.current.value.replaceAll('-','');
         let fechaHasta = inputFinishDate.current.value.replaceAll('-','');
         axios.get(`${PORT()}/ctacte?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&idCliente=${idClient}&idEmpresa=${enterprise.idempresa}`)
@@ -48,6 +50,7 @@ const Filter = ({enterprise, setRenderComponent, setHideNavbar, setEnterprise, s
                 setInitDate(inputInitDate.current.value);
                 setFinishDate(inputFinishDate.current.value);
                 setRenderComponent('CtaCteInfo');
+                swal.close();
             }
         })
         .catch((error) => {errorMessage('Error',error)});

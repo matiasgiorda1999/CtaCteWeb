@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle, faCheck, faTimes, faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import validatePassword from '../../../Common/ValidatePassword';
 import successMessage from '../../../Common/successMessage';
+import loadingMessage from '../../../Common/loadingMessage';
 import errorMessage from '../../../Common/errorMessage';
 import parseJwt from '../../../Common/parseJwt';
 import '../../../Common/Styles.css';
@@ -63,6 +64,7 @@ const ModifyPassword = ({setFunctionality}) => {
             axios.put(`${PORT()}/usuarios`,{ password: newPass },
                         { headers: {Authorization : `Bearer ${sessionStorage.getItem('token')}`.replaceAll('"','')} })
             .then((res) => {
+                loadingMessage('Modificando contraseña...');
                 if(res.data.msj === 'Registro usuario modificado exitosamente'){
                     successMessage('Correcto',res.data.msj);
                     resetInputs();
