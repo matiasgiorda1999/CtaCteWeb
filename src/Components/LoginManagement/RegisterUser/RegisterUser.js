@@ -51,15 +51,21 @@ const RegisterUser = ({setAction}) => {
         <div className="centerText">
             <label htmlFor="dniInput">DNI</label>
         </div>
-        <input type="number" style={{textAlign: 'center'}} className="form-control" id="dniInput" placeholder="Introduza su numero de DNI" ref={dniInput}/>
+        <input type="number" style={{textAlign: 'center'}} className="form-control" id="dniInput" 
+                placeholder="Introduza su numero de DNI" ref={dniInput}
+                onKeyPress={(e) => {if(e.key === "Enter") registerUser()}}/>
         <div className="centerText">
             <label htmlFor="cuitInput"  style={{marginTop: '2%'}}>C.U.I.T.</label>
         </div>
-        <input type="number" style={{textAlign: 'center'}} className="form-control" id="cuitInput" placeholder="Introduzca su numero de C.U.I.T" ref={cuitInput}/>
+        <input type="number" style={{textAlign: 'center'}} className="form-control" id="cuitInput" 
+                placeholder="Introduzca su numero de C.U.I.T" ref={cuitInput}
+                onKeyPress={(e) => {if(e.key === "Enter") registerUser()}}/>
         <div className="centerText" style={{marginTop: '2%'}}>
             <label htmlFor="emailInput">Email</label>
         </div>
-        <input type="email" style={{textAlign: 'center'}} className="form-control" id="emailInput" placeholder="ejemplo@email.com" ref={emailInput}/>
+        <input type="email" style={{textAlign: 'center'}} className="form-control" id="emailInput" 
+                placeholder="ejemplo@email.com" ref={emailInput}
+                onKeyPress={(e) => {if(e.key === "Enter") registerUser()}}/>
         <button className="btn"  style={{marginTop: '2%'}} onClick={() => {setAction('Login')}}><span style={{fontSize: '10px'}}>volver atras</span></button>
         <button type="button" className="btn btnConfirm col-12" onClick={registerUser}><label style={{cursor: 'pointer'}}>Registrarme</label></button>
     </>)

@@ -45,7 +45,9 @@ const RecoverPassword = ({setAction}) => {
         <div className="centerText">
             <label htmlFor="emailInput">Email</label>
         </div>
-        <input type="email" style={{textAlign: 'center'}} className="form-control" id="emailInput" placeholder="ejemplo@email.com" ref={emailInput}/>
+        <input type="email" style={{textAlign: 'center'}} className="form-control" 
+                id="emailInput" placeholder="ejemplo@email.com" ref={emailInput}
+                onKeyPress={(e) => {if(e.key === "Enter") recoverPassword()}}/>
         <br />
         <div style={{textAlign: 'center'}}>
             <span style={{fontSize: '12px'}}>Se le enviará a la casilla de su email una nueva contraseña.</span>

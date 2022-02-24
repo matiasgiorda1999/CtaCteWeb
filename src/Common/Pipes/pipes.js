@@ -31,7 +31,7 @@ export const toAmount = (amount) => {
         newAmount = newAmount.slice(0,index + 3);
     }
     let pointers = newAmount.includes("-") ? parseInt((index -1) / 3) : parseInt(index / 3);
-    if(index % 3 === 0 || (newAmount.includes("-") && (index - 1 ) % 3 === 0)) pointers = pointers -1;
+    if((!newAmount.includes("-") && (index % 3 === 0)) || (newAmount.includes("-") && (index - 1 ) % 3 === 0)) pointers = pointers -1;
     for(let i = 1 ; i <= pointers ; i++){
         newAmount = newAmount.slice(0,(index - i*3)) + "." + newAmount.slice((index - i*3));
     }

@@ -75,13 +75,17 @@ const Filter = ({enterprise, setRenderComponent, setHideNavbar, setEnterprise, s
             <br/>
             <div className='formRow' >
                 <label className='col-md-2 offset-md-4' >Fecha desde</label>
-                <input type='date' style={{width: '150px'}} ref={inputInitDate} onChange={() => {onChangeDate(true)}}></input>
+                <input type='date' style={{width: '150px'}} ref={inputInitDate} 
+                onChange={() => {onChangeDate(true)}}
+                onKeyPress={(e) => {if(e.key === "Enter") consult()}}></input>
             </div>
             <br/>
             <br/>
             <div className='formRow'>
                 <label className='col-md-2 offset-md-4'>Fecha hasta</label>
-                <input type='date' style={{width: '150px'}} ref={inputFinishDate} onChange={() => {onChangeDate(false)}}></input>
+                <input type='date' style={{width: '150px'}} ref={inputFinishDate} 
+                onChange={() => {onChangeDate(false)}}
+                onKeyPress={(e) => {if(e.key === "Enter") consult()}}></input>
             </div>
             <br/><br/><br/><br/>
             <div>

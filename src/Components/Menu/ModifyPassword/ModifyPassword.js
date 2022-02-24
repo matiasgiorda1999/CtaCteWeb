@@ -128,6 +128,7 @@ const ModifyPassword = ({setFunctionality}) => {
                             placeholder="Introduzca su nueva contraseña" 
                             ref={newPassword}
                             onChange={validateNewPass}
+                            onKeyPress={(e) => {if(e.key === "Enter") updatePassword()}}
                             disabled/>
                 </div>
                 <div className='col-md-1'>
@@ -165,6 +166,7 @@ const ModifyPassword = ({setFunctionality}) => {
                             placeholder="Vuelva a ingresar su nueva contraseña" 
                             ref={repeatPassword}
                             onChange={validateRepeatPass}
+                            onKeyPress={(e) => {if(e.key === "Enter") updatePassword()}}
                             disabled/>
                 </div>
                 <div className='col-md-1'>

@@ -52,12 +52,17 @@ const Login = ({setAction, setRenderComponent}) => {
             <div className="centerText">
                 <label htmlFor="emailInput">Email</label>
             </div>
-            <input type="email" style={{textAlign: 'center'}} className="form-control" id="emailInput" placeholder="ejemplo@email.com" ref={emailInput}/>
+            <input type="email" style={{textAlign: 'center'}} className="form-control" 
+                    id="emailInput" placeholder="ejemplo@email.com" ref={emailInput}
+                    onKeyPress={(e) => {if(e.key === "Enter") validateSession()}}/>
             <br/>
             <div className="centerText">
                 <label htmlFor="passInput">Contraseña</label>
             </div>
-            <input type={showPsw?"text":"password"} style={{textAlign: 'center'}} className="form-control" id="passInput" placeholder="Contraseña" ref={passwordInput}/>
+            <input type={showPsw?"text":"password"} style={{textAlign: 'center'}} 
+                    className="form-control" id="passInput" 
+                    onKeyPress={(e) => {if(e.key === "Enter") validateSession()}}
+                    placeholder="Contraseña" ref={passwordInput}/>
             <div className='text-end'>
                 <button className='btn' style={{padding: 5}} onClick={() => setShowPsw(!showPsw)}>
                     <span style={{fontSize: '10px'}}>{showPsw?"Ocultar":"Ver"} contraseña</span>
