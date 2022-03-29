@@ -1,5 +1,7 @@
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import CtaCtePDF from './CtaCtePDF';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackspace } from '@fortawesome/free-solid-svg-icons';
+import { faBackspace, faDownload } from '@fortawesome/free-solid-svg-icons';
 import parseJwt from '../../../../Common/parseJwt';
 import React from 'react';
 import { toDateSpanish, toAmount, toCompNumber, toDomicile } from '../../../../Common/Pipes/pipes';
@@ -11,13 +13,22 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
         setRenderComponent('Filter');
     }
     let debe = 0, haber = 0, saldo = ctacteInfo[0].SaldoIni;
-
     return(
-    <div className='container-fluid'>
+    <div className='container-fluid' style={{backgroundColor: 'white'}}>
         <div>
             <button className='col-md-1 btn' onClick={onClickBackButton}>
                 <FontAwesomeIcon icon={faBackspace}/> <label style={{cursor: 'pointer'}}>Volver</label>
             </button>
+            <PDFDownloadLink 
+                document={<CtaCtePDF enterprise={enterprise} initDate={initDate} finishDate={finishDate} idClient={idClient} ctacteInfo={ctacteInfo} 
+                        debe={0} haber={0} saldo={ctacteInfo[0].SaldoIni} toAmount={toAmount} toCompNumber={toCompNumber} toDomicile={toDomicile} 
+                        toDateSpanish={toDateSpanish} parseJwt={parseJwt}/>}
+                fileName="consulta-ctacte.pdf"        
+                        >
+                <button className='col-md-2 offset-md-9 btn' >
+                    <FontAwesomeIcon icon={faDownload}/> <label style={{cursor: 'pointer'}}>Descargar</label>
+                </button>
+            </PDFDownloadLink>
         </div>
         <div className='col-md-4 offset-md-4'>
             <h1 style={{textAlign: 'center'}}>{enterprise.nombre}</h1>
@@ -121,28 +132,28 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
             <table style={window.screen.width<400?{ display: 'block', overflow: 'auto', width: '100%', height: '100%' }:{ width: '100%', height: '100%' }}>
                 <thead>
                     <tr style={{borderStyle: 'solid', borderWidth: '1px', borderColor: 'black'}}>
-                        <th style={{textAlign: 'center'}}>
+                        <th style={{textAlign: 'center', width: '10%'}}>
                             <label><b>Fecha</b></label>
                         </th>
-                        <th style={{textAlign: 'center'}}>
+                        <th style={{width: '30%'}}>
                             <label><b>Detalle</b></label>
                         </th>
-                        <th style={{textAlign: 'center'}}>
+                        <th style={{width: '15%'}}>
                             <label><b>Comp</b></label>
                         </th>
-                        <th style={{textAlign: 'center'}}>
+                        <th style={{width: '10%', textAlign: 'right'}}>
                             <label><b>Debe</b></label>
                         </th>
-                        <th style={{textAlign: 'center'}}>
+                        <th style={{width: '10%', textAlign: 'right'}}>
                             <label><b>Haber</b></label>
                         </th>
-                        <th style={{textAlign: 'center'}}>
+                        <th style={{width: '15%', textAlign: 'right'}}>
                             <label><b>Saldo</b></label>
                         </th>
-                        <th style={{textAlign: 'center'}}> 
+                        <th style={{textAlign: 'center', width: '5%'}}> 
                             <label><b>Vto</b></label>
                         </th>
-                        <th style={{textAlign: 'center'}}>
+                        <th style={{textAlign: 'center', width: '5%'}}>
                             <label><b>Canc.</b></label>
                         </th>
                     </tr>
@@ -157,14 +168,14 @@ const CtaCteInfo = ({setRenderComponent, enterprise, ctacteInfo, idClient, initD
                         saldo = saldo + cci.Haber - cci.Debe;
                         return(
                             <tr key={i} style={(i===ctacteInfo.length -1)?{borderStyle: 'solid', borderWidth: '0px 0px 0.5px 0px', borderColor: 'black'}:{}}>
-                                <td style={{textAlign: 'center'}}><label>{toDateSpanish(cci.Fecha)}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{cci.Detalle.toUpperCase()}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{toCompNumber(cci.Letra,cci.Numero)}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{cci.Debe?toAmount(cci.Debe):0}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{cci.Haber?toAmount(cci.Haber):0}</label></td>
-                                <td style={{textAlign: 'center'}}><label>{toAmount(saldo)}</label></td>
-                                <td style={{textAlign: 'center'}}><label>-</label></td>
-                                <td style={{textAlign: 'center'}}><input type='checkbox' readOnly checked={cci.Cancelado === 1}></input></td>
+                                <td style={{textAlign: 'center', width: '10%'}}><label>{toDateSpanish(cci.Fecha)}</label></td>
+                                <td style={{width: '30%'}}><label>{cci.Detalle.toUpperCase()}</label></td>
+                                <td style={{width: '15%'}}><label>{toCompNumber(cci.Letra,cci.Numero)}</label></td>
+                                <td style={{textAlign: 'right', width: '10%'}}><label>{cci.Debe?toAmount(cci.Debe):0}</label></td>
+                                <td style={{textAlign: 'right', width: '10%'}}><label>{cci.Haber?toAmount(cci.Haber):0}</label></td>
+                                <td style={{textAlign: 'right', width: '15%'}}><label>{toAmount(saldo)}</label></td>
+                                <td style={{textAlign: 'center', width: '5%'}}><label>-</label></td>
+                                <td style={{textAlign: 'center', width: '5%'}}><input type='checkbox' readOnly checked={cci.Cancelado === 1}></input></td>
                             </tr>
                         )
                     })}
