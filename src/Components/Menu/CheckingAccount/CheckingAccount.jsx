@@ -18,7 +18,7 @@ const urlToCall = (queryParams, userCuit) => {
   for (var [name, value] of queryParams.entries()) {
     url += `${name}=${value}&`;
   }
-  url += `cuit=20-25941807-1`;
+  url += `cuit=${userCuit}`;
   return url;
 };
 
