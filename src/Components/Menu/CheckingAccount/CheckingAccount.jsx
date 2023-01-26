@@ -51,7 +51,9 @@ const CheckingAccount = () => {
       </Container>
       <BeRenderizedOneOrOther
         boolean={
-          checkingAccountMovements.content && enterprise.content && clientData
+          checkingAccountMovements.content &&
+          enterprise.content &&
+          clientData.content
         }
         ifTrueRender={
           <>

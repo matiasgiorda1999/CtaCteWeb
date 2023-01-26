@@ -18,7 +18,7 @@ const CheckingAccountReport = ({
 }) => {
   let sumDebe = 0;
   let sumHaber = 0;
-  let total = movements[0].SaldoIni || 0;
+  let total = movements[0]?.SaldoIni || 0;
   const compNameOf = (letter, number) => {
     let compName = "";
     if (letter) compName += `${letter} `;
