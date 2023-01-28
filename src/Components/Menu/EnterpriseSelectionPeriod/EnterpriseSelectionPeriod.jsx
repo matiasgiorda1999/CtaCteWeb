@@ -9,6 +9,7 @@ import {
   getEmptyPeriodForm,
   handleSubmit,
 } from "./EnterpriseSelectionPeriodContext";
+import locationOf from "../../../locationOf";
 
 const PORT = require("../../../config");
 
@@ -18,7 +19,7 @@ const EnterpriseSelectionPeriod = () => {
   const periodForm = useObject(getEmptyPeriodForm());
   return (
     <Form
-      action={`/cuenta-corriente`}
+      action={locationOf(`/cuenta-corriente`)}
       className="container-fluid"
       onSubmit={(event) => {
         handleSubmit(event, periodForm);

@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
+import locationOf from "../../locationOf";
 
 const CheckingAccountNavbar = ({ disableAllOptions = false }) => {
   const { logout } = useAuth0();
   return (
     <Navbar bg="light" expand="lg">
-      <Link className="navbar-brand" to={"/"}>
+      <Link className="navbar-brand" to={locationOf()}>
         Cuenta Corriente
       </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -18,7 +19,7 @@ const CheckingAccountNavbar = ({ disableAllOptions = false }) => {
       ) : (
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link className="nav-link active" to={"/mis-empresas"}>
+            <Link className="nav-link active" to={locationOf("/mis-empresas")}>
               Mis empresas
             </Link>
             <NavDropdown title="Usuario" id="basic-nav-dropdown">
@@ -29,7 +30,7 @@ const CheckingAccountNavbar = ({ disableAllOptions = false }) => {
       )}
       <Navbar.Collapse className="justify-content-end">
         <Navbar.Text>
-          <Nav.Link href="/" onClick={logout}>
+          <Nav.Link href={locationOf("/")} onClick={logout}>
             Cerrar sesión <FontAwesomeIcon icon={faSignOutAlt} />
           </Nav.Link>
         </Navbar.Text>
