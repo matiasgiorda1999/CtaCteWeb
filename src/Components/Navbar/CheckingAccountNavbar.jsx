@@ -23,14 +23,14 @@ const CheckingAccountNavbar = ({ disableAllOptions = false }) => {
               Mis empresas
             </Link>
             <NavDropdown title="Usuario" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/">Mis datos</NavDropdown.Item>
+              <NavDropdown.Item href={locationOf()}>Mis datos</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       )}
       <Navbar.Collapse className="justify-content-end">
         <Navbar.Text>
-          <Nav.Link href={locationOf("/")} onClick={logout}>
+          <Nav.Link href={locationOf()} onClick={logout}>
             Cerrar sesión <FontAwesomeIcon icon={faSignOutAlt} />
           </Nav.Link>
         </Navbar.Text>
