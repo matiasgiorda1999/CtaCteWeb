@@ -10,7 +10,12 @@ const Home = ({ user }) => {
     <Container>
       <BeRenderizedOneOrOther
         boolean={user.cuit}
-        ifTrueRender={<CheckingAccountNavbar disableAllOptions={!user.cuit} />}
+        ifTrueRender={
+          <CheckingAccountNavbar
+            disableAllOptions={!user.cuit}
+            isAdmin={user.user_roles[0] === "Admin"}
+          />
+        }
         ifFalseRender={<CuitForm user={user} />}
       />
       <Outlet />

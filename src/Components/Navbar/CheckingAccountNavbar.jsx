@@ -6,7 +6,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import locationOf from "../../locationOf";
 
-const CheckingAccountNavbar = ({ disableAllOptions = false }) => {
+const CheckingAccountNavbar = ({
+  disableAllOptions = false,
+  isAdmin = false,
+}) => {
   const { logout } = useAuth0();
   return (
     <Navbar bg="light" expand="lg">
@@ -22,6 +25,13 @@ const CheckingAccountNavbar = ({ disableAllOptions = false }) => {
             <Link className="nav-link active" to={locationOf("/mis-empresas")}>
               Mis empresas
             </Link>
+            {isAdmin ? (
+              <Link className="nav-link active" to={locationOf("/empresas")}>
+                Empresas
+              </Link>
+            ) : (
+              <></>
+            )}
             <NavDropdown title="Usuario" id="basic-nav-dropdown">
               <NavDropdown.Item href={locationOf()}>Mis datos</NavDropdown.Item>
             </NavDropdown>

@@ -5,7 +5,10 @@ import ErrorLabel from "./Labels/ErrorLabel.jsx";
 const InputNumber = ({ error, ...props }) => {
   return (
     <>
-      <CurrencyInput className="form-control" {...props} />
+      <CurrencyInput
+        className={!error ? "form-control" : "form-control is-invalid"}
+        {...props}
+      />
       {error && <ErrorLabel>{error}</ErrorLabel>}
     </>
   );
