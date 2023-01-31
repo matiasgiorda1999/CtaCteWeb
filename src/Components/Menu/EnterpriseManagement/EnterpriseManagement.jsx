@@ -19,10 +19,13 @@ import ButtonDelete from "../../../ComponentSupplier/ButtonDelete";
 import TitleLevel from "../../../ComponentSupplier/Titles/TitleLevel";
 import LinkLabeled from "../../../ComponentSupplier/LinkLabeled";
 import locationOf from "../../../locationOf";
+import { deleteEnterprise } from "./EnterpriseManagementContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const PORT = require("../../../config");
 
 const EnterpriseManagement = () => {
+  const { getAccessTokenSilently } = useAuth0();
   const enterprises = useGetEntities(`${PORT()}/empresas`);
   return (
     <Container className="container-fluid mt-3">
@@ -82,7 +85,12 @@ const EnterpriseManagement = () => {
                       className="btn"
                       level={2}
                       icon={faTrash}
-                      onConfirm={() => {}}
+                      onConfirm={async () => {
+                        deleteEnterprise(
+                          idempresa,
+                          await getAccessTokenSilently()
+                        );
+                      }}
                     />
                   </TableLabelData>
                 </TableRow>

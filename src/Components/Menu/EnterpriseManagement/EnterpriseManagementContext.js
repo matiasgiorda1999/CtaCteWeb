@@ -49,26 +49,69 @@ const giveMeEnterprise = ({
   };
 };
 
-export const handleSubmit = async (event, accessToken, enterpriseForm) => {
+export const handleSubmit = async (
+  event,
+  accessToken,
+  enterpriseForm,
+  enterpriseId
+) => {
   event.preventDefault();
   const { errors, ...enterpriseValues } = enterpriseForm.content;
   const resultValidation = validateEnterpriseForm(enterpriseValues);
   enterpriseForm.changePropertyTo("errors", resultValidation);
   const enterprise = giveMeEnterprise(enterpriseValues);
   if (!Object.keys(resultValidation).length) {
-    axios
-      .post(`${PORT()}/empresas`, enterprise, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((response) => {
-        successAlertMessage(response.data.description);
-        resetForm(event.target);
-        enterpriseForm.changeContentTo(getEmptyEnterpriseForm());
-      })
-      .catch((error) => {
-        errorAlertMessage(error.description);
-      });
+    if (enterpriseId) {
+      putEnterprise(enterpriseId, enterprise, accessToken)
+        .then((response) => {
+          responseOk(response, event, enterpriseForm);
+          window.location.href = "/empresas";
+        })
+        .catch((error) => {
+          errorAlertMessage(error.description);
+        });
+    } else {
+      postEnterprise(enterprise, accessToken)
+        .then((response) => {
+          responseOk(response, event, enterpriseForm);
+        })
+        .catch((error) => {
+          errorAlertMessage(error.description);
+        });
+    }
   }
+};
+
+const postEnterprise = (enterprise, accessToken) => {
+  return axios.post(`${PORT()}/empresas`, enterprise, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+};
+
+const putEnterprise = (enterpriseId, enterprise, accessToken) => {
+  return axios.put(`${PORT()}/empresas/${enterpriseId}`, enterprise, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+};
+
+export const deleteEnterprise = (enterpriseId, accessToken) => {
+  axios
+    .delete(`${PORT()}/empresas/${enterpriseId}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    .then((response) => {
+      successAlertMessage(response.data.description);
+      window.location.href = "/empresas";
+    })
+    .catch((error) => {
+      errorAlertMessage(error.description);
+    });
+};
+
+const responseOk = (response, event, enterpriseForm) => {
+  successAlertMessage(response.data.description);
+  resetForm(event.target);
+  enterpriseForm.changeContentTo(getEmptyEnterpriseForm());
 };
 
 const validateEnterpriseForm = ({
