@@ -9,7 +9,11 @@ const PreviewImageLabeled = ({ label, name, url }) => {
       </Container>
       <Container className="col-md-3">
         <Container className={url ? "" : "form-control"}>
-          <img alt="" src={url} className={url ? "form-control" : ""} />
+          <img
+            alt=""
+            src={url.toString()}
+            className={url ? "form-control" : ""}
+          />
         </Container>
       </Container>
     </Container>

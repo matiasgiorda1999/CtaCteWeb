@@ -62,7 +62,7 @@ const EnterpriseManagement = () => {
                   <TableLabelData>
                     <LinkIconLabeled
                       className="btn"
-                      linking={"empresas/asignar/1"}
+                      linking={`/empresas/asignar/${idempresa}`}
                       icon={faUser}
                     />
                   </TableLabelData>

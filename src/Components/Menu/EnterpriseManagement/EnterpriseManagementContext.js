@@ -35,18 +35,18 @@ const giveMeEnterprise = ({
   responsable,
   income,
 }) => {
-  return {
-    CUIT: toCUITformat(cuit),
-    nombre: name,
-    imagenURL: image,
-    calle: street,
-    numeroCalle: parseInt(streetNumber),
-    Localidad: location,
-    AfipProvinciaId: parseInt(province),
-    AfipPaisId: parseInt(country),
-    AfipResponsableId: parseInt(responsable),
-    AfipIngBrutosId: parseInt(income),
-  };
+  const formData = new FormData();
+  formData.append("CUIT", toCUITformat(cuit));
+  formData.append("nombre", name);
+  formData.append("imagenURL", image.data);
+  formData.append("calle", street);
+  formData.append("numeroCalle", parseInt(streetNumber));
+  formData.append("Localidad", location);
+  formData.append("AfipProvinciaId", parseInt(province));
+  formData.append("AfipPaisId", parseInt(country));
+  formData.append("AfipResponsableId", parseInt(responsable));
+  formData.append("AfipIngBrutosId", parseInt(income));
+  return formData;
 };
 
 export const handleSubmit = async (
@@ -169,7 +169,7 @@ export const enterpriseIdentifiedBy = async (enterpriseid, accessToken) => {
   return {
     cuit: data.CUIT.replaceAll("-", ""),
     name: data.nombre,
-    image: data.imagenURL,
+    image: { link: data.imagenURL },
     street: data.calle,
     streetNumber: data.numeroCalle,
     location: data.Localidad,
@@ -179,4 +179,47 @@ export const enterpriseIdentifiedBy = async (enterpriseid, accessToken) => {
     income: data.AFIPIngBrutosId,
     errors: {},
   };
+};
+
+export const handleGetUsers = (accessToken, nameFilter, setUsers) => {
+  if (nameFilter.length > 4) {
+    getUsers(setUsers, nameFilter, accessToken);
+  }
+};
+
+const getUsers = (actionOk, nameFilter, accessToken) => {
+  fetchGetUsers(nameFilter, accessToken).then(({ data }) => {
+    actionOk(data);
+  });
+};
+
+const fetchGetUsers = async (nameFilter, accessToken) => {
+  return await axios.get(`${PORT()}/usuarios?nameFilter=${nameFilter}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+};
+
+export const assignUsersToEnterprise = (
+  event,
+  accessToken,
+  enterprisesXusers,
+  enterpriseId
+) => {
+  event.preventDefault();
+  axios
+    .post(
+      `${PORT()}/asignar-usuarios/empresas/${enterpriseId}`,
+      {
+        users: enterprisesXusers.content,
+      },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    )
+    .then((response) => {
+      successAlertMessage(response.data.description);
+      event.target.reset();
+      enterprisesXusers.changeContentTo([]);
+    })
+    .catch((error) => {
+      errorAlertMessage(error.description);
+    });
 };

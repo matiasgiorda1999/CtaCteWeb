@@ -7,6 +7,7 @@ import CheckingAccount from "./Components/Menu/CheckingAccount/CheckingAccount.j
 import locationOf from "./locationOf.js";
 import EnterpriseManagement from "./Components/Menu/EnterpriseManagement/EnterpriseManagement.jsx";
 import FormEnterprise from "./Components/Menu/EnterpriseManagement/EnterpriseForm.jsx";
+import EnterpriseXUsers from "./Components/Menu/EnterpriseManagement/EnterpriseXUsers.jsx";
 
 const Routes = ({ user }) => {
   const routes = {
@@ -45,6 +46,10 @@ const Routes = ({ user }) => {
       {
         path: locationOf("/empresas/detalle/:empresaid"),
         element: <FormEnterprise title="Ver empresa" disableOptions={true} />,
+      },
+      {
+        path: locationOf("/empresas/asignar/:empresaid"),
+        element: <EnterpriseXUsers />,
       },
     ];
   const router = createBrowserRouter([routes]);

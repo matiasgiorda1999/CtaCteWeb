@@ -189,16 +189,16 @@ const FormEnterprise = ({ title, disableOptions }) => {
             label="Imagen"
             disabled={disableOptions}
             onChange={({ currentTarget }) => {
-              enterpriseForm.changePropertyTo(
-                "image",
-                URL.createObjectURL(currentTarget.files[0])
-              );
+              enterpriseForm.changePropertyTo("image", {
+                link: URL.createObjectURL(currentTarget.files[0]),
+                data: currentTarget.files[0],
+              });
             }}
             error={enterpriseForm.content.errors.image}
           />
           <PreviewImageLabeled
             label="Vista previa de imagen"
-            url={enterpriseForm.content.image}
+            url={enterpriseForm.content.image.link}
           />
           <BeShowed show={!disableOptions}>
             <Buttons
